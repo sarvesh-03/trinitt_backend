@@ -47,11 +47,15 @@ func AddDataSet(c echo.Context) error {
 	}
 
 	var dataset []models.Data
+	var records []Record
 
 	for i, data := range req.Dataset {
+		var record Record
+		record.User_id = int(userId)
+		record.Entity_id = int(req.EntityID)
+
 		for _, parameter := range parameters {
 			paramType := parameter.Type
-
 			if paramType == models.ParameterTypeString {
 				if val, ok := data[parameter.ID].(string); ok {
 					dataset = append(dataset, models.Data{
@@ -60,7 +64,16 @@ func AddDataSet(c echo.Context) error {
 						EntityID:    parameter.EntityID,
 						Row:         maxEntries + uint(i),
 					})
+
+					newParam := ParamType{
+						Data_type: "string",
+						Value:     val,
+					}
+
+					record.Param = append(record.Param, newParam)
+
 				}
+
 			} else if paramType == models.ParameterTypeInt {
 				val := strconv.Itoa(int(data[parameter.ID].(float64)))
 				dataset = append(dataset, models.Data{
@@ -69,9 +82,18 @@ func AddDataSet(c echo.Context) error {
 					EntityID:    parameter.EntityID,
 					Row:         maxEntries + uint(i),
 				})
+				newParam := ParamType{
+					Data_type: "int",
+					Value:     val,
+				}
+				record.Param = append(record.Param, newParam)
 			}
 		}
+
+		records = append(records, record)
 	}
+
+	go Produce(records)
 
 	if err := db.Create(&dataset).Error; err != nil {
 		return c.JSON(http.StatusInternalServerError, "Error adding data")
