@@ -61,7 +61,7 @@ func (c *Client) readPump() {
 		if M.Type == "AUTH_USER" {
 			token := M.Data.(string)
 
-			id, err := utils.ValidateToken(token)
+			id, err := utils.GetUserIDFromToken(token)
 
 			fmt.Println(id, "id")
 			if err != nil {

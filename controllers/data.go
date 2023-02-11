@@ -7,19 +7,16 @@ import (
 	"github.com/labstack/echo/v4"
 	"github.com/trinitt/config"
 	"github.com/trinitt/models"
+	"github.com/trinitt/utils"
 )
 
-type AddDataRequest struct {
+type AddDatasetRequest struct {
 	EntityID uint                   `json:"entityId"`
 	Dataset  []map[uint]interface{} `json:"dataset"`
 }
 
-type MaxRespose struct {
-	MaxEntries uint `gorm:"max_entries"`
-}
-
-func AddData(c echo.Context) error {
-	var req AddDataRequest
+func AddDataSet(c echo.Context) error {
+	var req AddDatasetRequest
 
 	if err := c.Bind(&req); err != nil {
 		return c.JSON(http.StatusBadRequest, "Error parsing request body")
@@ -27,7 +24,7 @@ func AddData(c echo.Context) error {
 
 	db := config.GetDB()
 
-	userId := uint(1)
+	userId := utils.GetUserID(c)
 
 	var parameters []models.Parameter
 

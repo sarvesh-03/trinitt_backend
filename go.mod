@@ -14,6 +14,7 @@ require (
 
 require (
 	github.com/mitchellh/mapstructure v1.5.0 // indirect
+	bitbucket.org/sjbog/go-dbscan v0.0.0-20150721083751-f30c2f04d63c // indirect
 	golang.org/x/crypto v0.6.0 // indirect
 )
 

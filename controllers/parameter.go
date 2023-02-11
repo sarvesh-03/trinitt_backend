@@ -6,6 +6,7 @@ import (
 	"github.com/labstack/echo/v4"
 	"github.com/trinitt/config"
 	"github.com/trinitt/models"
+	"github.com/trinitt/utils"
 )
 
 type AddParamToEntityRequest struct {
@@ -20,6 +21,12 @@ type AddParamToEntityResponse struct {
 	EntityID uint                 `json:"entityId"`
 }
 
+type ParamResponse struct {
+	ID      uint                 `json:"id"`
+	KeyName string               `json:"keyName"`
+	Type    models.ParameterType `json:"type"`
+}
+
 func AddParamToEntity(c echo.Context) error {
 	var req AddParamToEntityRequest
 
@@ -29,7 +36,7 @@ func AddParamToEntity(c echo.Context) error {
 
 	db := config.GetDB()
 
-	userId := uint(1)
+	userId := utils.GetUserID(c)
 
 	var entity models.Entity
 
@@ -55,6 +62,20 @@ func AddParamToEntity(c echo.Context) error {
 		Name:     parameter.KeyName,
 		Type:     parameter.Type,
 		EntityID: parameter.EntityID,
+	}
+
+	return c.JSON(http.StatusOK, res)
+}
+
+func GetParametersByEntityID(c echo.Context) error {
+	entityId := c.Param("entityId")
+
+	db := config.GetDB()
+
+	var res []ParamResponse
+
+	if err := db.Model(models.Parameter{}).Where("entity_id = ?", entityId).Find(&res).Error; err != nil {
+		return c.JSON(http.StatusInternalServerError, err)
 	}
 
 	return c.JSON(http.StatusOK, res)

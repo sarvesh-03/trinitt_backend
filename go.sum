@@ -1,3 +1,5 @@
+bitbucket.org/sjbog/go-dbscan v0.0.0-20150721083751-f30c2f04d63c h1:WFzaxIBgiX4qGNLgD1iEPUnO38Al2/7Gf1ZpeiJTDnU=
+bitbucket.org/sjbog/go-dbscan v0.0.0-20150721083751-f30c2f04d63c/go.mod h1:6UbsTI2W47FHz17bNn9Jw8rSGSK+WBenutvSHz8PPf0=
 cloud.google.com/go v0.26.0/go.mod h1:aQUYkXzVsufM+DwF1aE+0xfcU+56JwCaLick0ClmMTw=
 cloud.google.com/go v0.34.0/go.mod h1:aQUYkXzVsufM+DwF1aE+0xfcU+56JwCaLick0ClmMTw=
 github.com/BurntSushi/toml v0.3.1/go.mod h1:xHWCNGjB5oqiDr8zfno3MHue2Ht5sIBksp03qcyfWMU=
