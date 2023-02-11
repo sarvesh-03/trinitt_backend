@@ -16,6 +16,7 @@ var DbName string
 var DbPort string
 var ServerPort string
 var JWTSecret string
+var kafkaUrl string
 
 func InitConfig() {
 	err := godotenv.Load()
@@ -30,4 +31,5 @@ func InitConfig() {
 	DbPort = os.Getenv("POSTGRES_PORT")
 	ServerPort = os.Getenv("SERVER_PORT")
 	JWTSecret = os.Getenv("JWT_SECRET")
+	kafkaUrl = os.Getenv("KAFKA_URL")
 }

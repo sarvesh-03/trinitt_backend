@@ -1,5 +1,5 @@
 build:
-	go run /app/main.go
+	go run -tags musl /app/main.go
 
 run: build
 	./server

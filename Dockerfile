@@ -2,13 +2,14 @@
 FROM golang:1.18-alpine AS build
 
 WORKDIR /app
+RUN apk add gcc librdkafka-dev pkgconf musl-dev
 
 COPY go.mod go.sum  ./
 RUN go mod download
 
 COPY . .
 
-RUN go build -o server
+RUN go build -o server -tags musl
 
 ## Dev
 FROM build AS dev

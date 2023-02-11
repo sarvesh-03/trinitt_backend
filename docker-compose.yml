@@ -21,14 +21,14 @@ services:
     volumes:
       - pg_db:/data/postgres
 
-    trinitt_adminer:
-      container_name: "trinitt_adminer"
-      image: adminer
-      restart: always
-      environment:
-        ADMINER_DESIGN: pappu687
-      ports:
-        - ${ADMINER_PORT}:8080
+  trinitt_adminer:
+    container_name: "trinitt_adminer"
+    image: adminer
+    restart: always
+    environment:
+      ADMINER_DESIGN: pappu687
+    ports:
+      - ${ADMINER_PORT}:8080
 
 volumes:
   pg_db:

@@ -3,12 +3,13 @@ package controllers
 import (
 	"fmt"
 	"log"
+	"math/rand"
 	"net/http"
-	"time"
 
+	"github.com/confluentinc/confluent-kafka-go/kafka"
 	"github.com/hamba/avro"
 	"github.com/labstack/echo/v4"
-	"github.com/segmentio/kafka-go"
+
 	"github.com/trinitt/config"
 	"github.com/trinitt/utils"
 )
@@ -43,7 +44,7 @@ func SignupUser(c echo.Context) error {
 	if err != nil {
 		log.Fatal("failed to write messages:", err)
 	}
-	producer:= config.GetProducer()
+	// producer:= config.GetProducer()
 	
 	in := SimpleRecord{A: 27, B: "foo"}
 
@@ -53,6 +54,20 @@ func SignupUser(c echo.Context) error {
 	}
 
 	fmt.Printf("%+v\n", data)
+
+	users := [...]string{"eabara", "jsmith", "sgarcia", "jbernard", "htanaka", "awalther"}
+    items := [...]string{"book", "alarm clock", "t-shirts", "gift card", "batteries"}
+	topic:="qwerty"
+
+    for n := 0; n < 10; n++ {
+        key := users[rand.Intn(len(users))]
+        data := items[rand.Intn(len(items))]
+        config.GetProducer().Produce(&kafka.Message{
+            TopicPartition: kafka.TopicPartition{Topic: &topic, Partition: kafka.PartitionAny},
+            Key:            []byte(key),
+            Value:          []byte(data),
+        }, nil)
+    }
 
 
 
@@ -65,13 +80,13 @@ func SignupUser(c echo.Context) error {
 	// // 	log.Fatal("failed to close writer:", err)
 	// // }
 	// fmt.Println(ocfFileContents.String())
-	producer.SetWriteDeadline(time.Now().Add(10*time.Second))
-	_, err = producer.WriteMessages(
-		kafka.Message{Value: data},
-	)
-	if err != nil {
-		log.Fatal("failed to write messages:", err)
-	}
+	// producer.SetWriteDeadline(time.Now().Add(10*time.Second))
+	// _, err = producer.WriteMessages(
+	// 	kafka.Message{Value: data},
+	// )
+	// if err != nil {
+	// 	log.Fatal("failed to write messages:", err)
+	// }
 
 	return utils.SendResponse(c, http.StatusOK, "User created successfully")
 }

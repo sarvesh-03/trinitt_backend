@@ -1,25 +1,25 @@
 package config
 
 import (
-	"context"
 	"log"
 
-	"github.com/segmentio/kafka-go"
+	"github.com/confluentinc/confluent-kafka-go/kafka"
 )
 
-var producer *kafka.Conn
+var KafkaProducer *kafka.Producer 
 
 
 func CreateProducer() {
-	topic := "qwerty"
-	partition := 0
+	
 	var err error
-	producer, err = kafka.DialLeader(context.Background(), "tcp", "kafka:9092", topic, partition)
+	
+	KafkaProducer, err = kafka.NewProducer(&kafka.ConfigMap{"bootstrap.servers": kafkaUrl})
 	if err != nil {
 		log.Fatal("failed to dial leader:", err)
 	}
+	
 }
 
-func GetProducer() *kafka.Conn{
-	return producer
+func GetProducer() *kafka.Producer{
+	return KafkaProducer
 }
