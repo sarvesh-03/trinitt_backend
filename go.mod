@@ -13,7 +13,6 @@ require (
 )
 
 require (
-	github.com/linkedin/goavro v2.1.0+incompatible // indirect
 	github.com/mitchellh/mapstructure v1.5.0 // indirect
 	golang.org/x/crypto v0.6.0 // indirect
 )

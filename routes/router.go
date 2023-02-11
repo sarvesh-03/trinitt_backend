@@ -56,7 +56,7 @@ func SendStreamOfNodes(userID uint, nodes []Node) {
 func Init(e *echo.Echo) {
 	api := e.Group("/api")
 	UserRoutes(api)
-	api.GET("/kafka", controllers.SignupUser)
+	api.GET("/kafka", controllers.Produce)
 	api.GET("/nodes", func(c echo.Context) error {
 		nodes := []Node{
 			{ID: 1, X: 1, Y: 1, Color: "red"},
