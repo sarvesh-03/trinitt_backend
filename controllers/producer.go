@@ -11,13 +11,7 @@ import (
 	"github.com/trinitt/config"
 )
 
-type SignupRequest struct {
-	Firstname string `json:"firstname"`
-	Lastname  string `json:"lastname"`
-	Email     string `json:"email"`
-	Password  string `json:"password"`
-	IsSeller  bool   `json:"is_seller"`
-}
+
 
 var Schema = `{
 	"type": "record",
@@ -54,6 +48,49 @@ var Schema = `{
 	  }
 	]
   }`
+
+  var Schema1 = `{
+	"type": "record",
+	"name": "Record",
+	"fields": [
+	  {
+		"name": "param",
+		"type": {
+		  "type": "array",
+		  "items": {
+			"type": "record",
+			"namespace": "Record",
+			"name": "param",
+			"fields": [
+			  {
+			"name": "x",
+			"type": "double"
+			},
+			{
+			"name": "y",
+			"type": "double"
+			},
+			{
+			"name": "cluster",
+			"type": "int"
+			}
+			]
+		  }
+		}
+	  }
+	]
+  }`
+
+type Node1 struct {
+	X   float64      `avro:"x" json:"x"`
+	Y 	float64      `avro:"y" json:"y"`
+	Cluster     int  `avro:"cluster" json:"cluster"`
+}
+
+type Nodes struct{
+	Param     []Node1 `avro:"param" json:"param"`
+}
+
 
 type ParamType struct {
 	Data_type string `avro:"data_type" json:"data_type"`

@@ -10,7 +10,7 @@ import (
 
 
 func Consume(){
-	schema, _ := avro.Parse(Schema)
+	schema, _ := avro.Parse(Schema1)
 	
 	go func(){
 	run:=true
@@ -18,7 +18,7 @@ func Consume(){
 		msg, err := config.GetConsumer().ReadMessage(time.Second)
 		if err == nil {
 			fmt.Printf("Message on %s: %s\n", msg.TopicPartition, string(msg.Value))
-			out := Record{}
+			out := Nodes{}
 			avro.Unmarshal(schema, msg.Value, &out)
 			fmt.Println(out)
 			PostConsume(out)
@@ -27,7 +27,7 @@ func Consume(){
 	}()
 }
 
-func PostConsume(rec Record){
+func PostConsume(rec Nodes){
 	// Setup(rec)
 	// clusters:=GetClustersForUser(1)
 	// for _, cluster := range clusters {
