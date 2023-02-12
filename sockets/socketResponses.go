@@ -22,6 +22,11 @@ func SendMessageToClient(userID uint, messageType string, message interface{}) {
 	response.MType = messageType
 	response.Data = message
 
+	if wsHub == nil {
+		fmt.Println("wsHub is nil")
+		return
+	}
+
 	client := GetClientByUserID(userID)
 
 	fmt.Println("Client: ", client, userID)

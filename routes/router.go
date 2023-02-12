@@ -44,9 +44,9 @@ func Init(e *echo.Echo) {
 
 	api.POST("/entity/create", controllers.CreateEntity)
 	api.POST("/parameter/create", controllers.AddParamToEntity)
-	api.POST("/dataset/add", controllers.AddDataSet)
 
 	api.GET("/entities", controllers.GetEntities)
+	api.POST("/dataset/add", controllers.AddDataSet)
 	api.GET("/params/:entityId", controllers.GetParametersByEntityID)
 	api.GET("/nodes/:entityId", controllers.GetNodesByEntityID)
 

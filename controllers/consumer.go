@@ -57,8 +57,9 @@ func GetColorFromClusterID(id int) string {
 func PostConsume(rec Nodes) {
 	nodes := []Node{}
 
-	for _, node := range rec.Param {
+	for index, node := range rec.Param {
 		nodes = append(nodes, Node{
+			ID:    index,
 			X:     int(node.X),
 			Y:     int(node.Y),
 			Color: GetColorFromClusterID(node.Cluster),

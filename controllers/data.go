@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"fmt"
 	"net/http"
 	"strconv"
 
@@ -50,9 +51,11 @@ func AddDataSet(c echo.Context) error {
 	var records []Record
 
 	for i, data := range req.Dataset {
-		var record Record
-		record.User_id = int(userId)
-		record.Entity_id = int(req.EntityID)
+		var record Record = Record{
+			Entity_id: int(req.EntityID),
+			User_id:   int(userId),
+			Param:     []ParamType{},
+		}
 
 		for _, parameter := range parameters {
 			paramType := parameter.Type
@@ -91,6 +94,10 @@ func AddDataSet(c echo.Context) error {
 		}
 
 		records = append(records, record)
+	}
+
+	for _, record := range records {
+		fmt.Println(record)
 	}
 
 	go Produce(records)
